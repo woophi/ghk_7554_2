@@ -1,12 +1,10 @@
 import { AmountInput } from '@alfalab/core-components/amount-input/cssm';
 import { BottomSheet } from '@alfalab/core-components/bottom-sheet/cssm';
 import { Button } from '@alfalab/core-components/button/cssm';
-import { PureCell } from '@alfalab/core-components/pure-cell/cssm';
 import { Typography } from '@alfalab/core-components/typography/cssm';
 import { BankMIcon } from '@alfalab/icons-glyph/BankMIcon';
 import { ChevronLeftMIcon } from '@alfalab/icons-glyph/ChevronLeftMIcon';
 import { FlameMIcon } from '@alfalab/icons-glyph/FlameMIcon';
-import { InformationCircleLineMIcon } from '@alfalab/icons-glyph/InformationCircleLineMIcon';
 import { StarMIcon } from '@alfalab/icons-glyph/StarMIcon';
 import { UsdMIcon } from '@alfalab/icons-glyph/UsdMIcon';
 import { WorldMIcon } from '@alfalab/icons-glyph/WorldMIcon';
@@ -143,7 +141,7 @@ const QuestionCard = ({
 export const App = () => {
   const { questions } = useStocksData();
   const [openBs, setOpenBs] = useState(false);
-  const [view, setView] = useState<'feed' | 'answer' | 'buy' | 'buy-fast'>('feed');
+  const [view, setView] = useState<'feed' | 'answer' | 'buy'>('feed');
   const [activeCategory, setActiveCategory] = useState(CATEGORY_ALL);
   const [GaugeChartComponent, setGaugeChartComponent] = useState<ComponentType<Record<string, unknown>> | null>(null);
   const [answerData, setAnswerData] = useState<{
@@ -208,7 +206,7 @@ export const App = () => {
   const filteredQuestions =
     activeCategory === CATEGORY_ALL ? questions : questions.filter(({ category }) => category === activeCategory);
 
-  if (view === 'buy-fast' || view === 'buy') {
+  if (view === 'buy') {
     return (
       <div>
         <div className={appSt.container}>
@@ -259,11 +257,7 @@ export const App = () => {
             type="button"
             className={answerSt.backButton}
             onClick={() => {
-              if (view === 'buy-fast') {
-                setView('feed');
-              } else {
-                setView('answer');
-              }
+              setView('answer');
             }}
           >
             <ChevronLeftMIcon className={answerSt.backIcon} />
@@ -343,45 +337,6 @@ export const App = () => {
         <Typography.Text tag="p" view="primary-medium" defaultMargins={false} className={appSt.heroText}>
           Ставь кешбэк на реальные события. Угадал — получаешь больше баллов.
         </Typography.Text>
-
-        <PureCell className={appSt.box}>
-          <PureCell.Graphics verticalAlign="top">
-            <InformationCircleLineMIcon color="#BD6A0F" />
-          </PureCell.Graphics>
-          <PureCell.Content>
-            <PureCell.Main>
-              <Typography.Title
-                tag="h5"
-                view="xsmall"
-                weight="medium"
-                font="system"
-                style={{
-                  color: '#BD6A0F',
-                }}
-              >
-                Недостаточно кешбэка
-              </Typography.Title>
-              <Typography.Text
-                style={{ color: '#EA8313', margin: '8px 0 12px' }}
-                view="secondary-large"
-                tag="p"
-                defaultMargins={false}
-              >
-                Для ставки 100 кешбэка не хватает. Докупите кешбэк, чтобы продолжить.
-              </Typography.Text>
-              <Button
-                size={32}
-                block
-                style={{ backgroundColor: '#BD6A0F', color: '#FFFFFF' }}
-                onClick={() => {
-                  setView('buy-fast');
-                }}
-              >
-                Купить кешбэк
-              </Button>
-            </PureCell.Main>
-          </PureCell.Content>
-        </PureCell>
       </div>
 
       <section className={appSt.feedSection}>
