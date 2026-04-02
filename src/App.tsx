@@ -152,6 +152,17 @@ export const App = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
+    if (openBs) {
+      window.gtag('event', '7554_bottomsheet_impression', { var: 'var2' });
+    }
+  }, [openBs]);
+  useEffect(() => {
+    if (view === 'buy') {
+      window.gtag('event', '7554_cashback_buy_impression', { var: 'var2' });
+    }
+  }, [view]);
+
+  useEffect(() => {
     if (!LS.getItem(LSKeys.UserId, null)) {
       LS.setItem(LSKeys.UserId, Date.now());
     }
@@ -199,6 +210,8 @@ export const App = () => {
   };
 
   const submit = () => {
+    window.gtag('event', '7554_cashback_buy_click_step2', { var: 'var2', size: sum.toString() });
+
     window.location.replace(LINK);
   };
 
@@ -307,6 +320,8 @@ export const App = () => {
               view="secondary"
               block
               onClick={() => {
+                window.gtag('event', '7554_cashback_buy_click_step1', { var: 'var2' });
+
                 setOpenBs(false);
                 setView('buy');
               }}

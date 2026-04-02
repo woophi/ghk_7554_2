@@ -42,11 +42,11 @@ export const AnswerScreen = ({
   const winAmount = Math.round(stake * selectedCoeff);
 
   useEffect(() => {
-    window.gtag('event', '7554_event_impression', { var: 'var1', question: question.question });
+    window.gtag('event', '7554_event_impression', { var: 'var2', question: question.question });
   }, []);
 
   const submit = () => {
-    window.gtag('event', '7554_bet_click', { var: 'var1', question: question.question, answer, bet_size: String(stake) });
+    window.gtag('event', '7554_bet_click', { var: 'var2', question: question.question, answer, bet_size: String(stake) });
     onSubmit();
   };
 
